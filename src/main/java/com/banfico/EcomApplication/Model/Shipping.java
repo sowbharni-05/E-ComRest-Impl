@@ -1,17 +1,26 @@
 package com.banfico.EcomApplication.Model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name="shipping")
 public class Shipping {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int shippingId;
     private String shippingType;
     private int ShippingCost;
-    @OneToOne(cascade = CascadeType.ALL,targetEntity = Order.class)
-    private Order order;
+   // @JsonManagedReference(value="shippingRef")
+    @OneToOne(cascade = CascadeType.ALL,targetEntity = OrderDetail.class,mappedBy = "shipping")
+    private OrderDetail orderdetail;
 
 }

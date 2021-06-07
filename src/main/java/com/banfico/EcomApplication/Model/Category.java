@@ -1,5 +1,6 @@
 package com.banfico.EcomApplication.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int categoryId;
     private String CategoryName;
-    @OneToMany(targetEntity = Product.class)
+    @JsonManagedReference
+    @OneToMany(targetEntity = Product.class,mappedBy = "category")
     private List<Product> products;
 }
