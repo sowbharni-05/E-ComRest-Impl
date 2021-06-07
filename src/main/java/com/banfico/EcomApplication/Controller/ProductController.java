@@ -20,10 +20,12 @@ public class ProductController {
 
     @RequestMapping(path="/product",method = RequestMethod.GET)
     public ResponseEntity<Object> getCategory(){
+
         return productservice.getCategoryInfo();
     }
     @RequestMapping(path = "/product/{id}",method= RequestMethod.DELETE)
     public ResponseEntity<String> deleteProduct(@PathVariable int id){
+
         return productservice.deleteProductInfo(id);
     }
 

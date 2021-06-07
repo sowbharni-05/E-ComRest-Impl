@@ -1,6 +1,5 @@
 package com.banfico.EcomApplication.Controller;
 
-import com.banfico.EcomApplication.Model.Customer;
 import com.banfico.EcomApplication.Model.OrderDetail;
 import com.banfico.EcomApplication.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
