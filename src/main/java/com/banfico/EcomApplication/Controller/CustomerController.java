@@ -1,6 +1,7 @@
 package com.banfico.EcomApplication.Controller;
 
 import com.banfico.EcomApplication.Model.Customer;
+import com.banfico.EcomApplication.Model.OrderDetail;
 import com.banfico.EcomApplication.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,6 @@ public class CustomerController{
     @Autowired
     private CustomerService customerservice;
 
-    @RequestMapping(path = "/customer",method = RequestMethod.POST)
-
-    public ResponseEntity<String> addCustomer(@RequestBody Customer cus)
-    {
-        return customerservice.addCustomerInfo(cus);
-    }
     @RequestMapping(path="/customer",method = RequestMethod.GET)
     public ResponseEntity<Object> getCustomer(){
 
@@ -31,5 +26,24 @@ public class CustomerController{
     public ResponseEntity<String> deleteCustomer(@PathVariable int id){
         return customerservice.deleteCustomerInfo(id);
     }
+    @RequestMapping(path="/order",method = RequestMethod.POST)
+   public ResponseEntity<String> addOrder(@RequestBody OrderDetail order)
+    {
+        return customerservice.addOrderInfo(order);
+    }
+    @RequestMapping(path="/order/{id}/{status}", method = RequestMethod.POST)
+    public ResponseEntity<String> updateStatus(@PathVariable int id, @PathVariable String status){
+        return customerservice.updateStatus(id,status);
+    }
+    @RequestMapping(path="/order/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteOrder(@PathVariable int id){
+        return customerservice.deleteOrderInfo(id);
+    }
+    @RequestMapping(path="/shipping",method = RequestMethod.GET)
+    public ResponseEntity<Object> getShipping()
+    {
+        return customerservice.getShippingInfo();
+    }
+
 
 }
