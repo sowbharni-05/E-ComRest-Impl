@@ -1,7 +1,11 @@
 package com.banfico.EcomApplication.Service;
 
 import com.banfico.EcomApplication.Dao.CustomerRepo;
+import com.banfico.EcomApplication.Dao.OrderRepo;
+import com.banfico.EcomApplication.Dao.ShippingRepo;
 import com.banfico.EcomApplication.Model.Customer;
+import com.banfico.EcomApplication.Model.OrderDetail;
+import com.banfico.EcomApplication.Model.Shipping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,15 +17,12 @@ import java.util.List;
 public class CustomerService {
     @Autowired
     private CustomerRepo customerrepo;
+    @Autowired private OrderRepo orderrepo;
+    @Autowired private ShippingRepo shippingrepo;
 
     private Customer savedCus;
+    private OrderDetail savedOrder;
 
-    public ResponseEntity<String> addCustomerInfo(Customer cus) {
-        savedCus=customerrepo.save(cus);
-        if(customerrepo.findById(savedCus.getCustomerId()).isPresent())
-            return ResponseEntity.ok().body("Customer Details Updated");
-        return ResponseEntity.badRequest().body("Invalid Approach");
-    }
 
     public ResponseEntity<Object> getCustomerInfo() {
         List<Customer> savedCus=customerrepo.findAll();
@@ -49,5 +50,41 @@ public class CustomerService {
         }
         return ResponseEntity.unprocessableEntity().body("No details found");
     }
+    public ResponseEntity<String> addOrderInfo(OrderDetail ord) {
+        savedOrder = orderrepo.save(ord);
+        if (orderrepo.findById(savedOrder.getOrderId()).isPresent())
+            return ResponseEntity.ok().body("Details Recorded");
+        return ResponseEntity.badRequest().body("Invalid Approach");
+    }
+
+
+    public ResponseEntity<String> deleteOrderInfo(int id) {
+        if (orderrepo.findById(id).isPresent()) {
+            OrderDetail deleteOrder = orderrepo.getById(id);
+            orderrepo.delete(deleteOrder);
+            return ResponseEntity.ok().body("Details deleted successfully");
+        }
+        return ResponseEntity.unprocessableEntity().body("No details found");
+    }
+
+    public ResponseEntity<String> updateStatus(int id, String status) {
+        savedOrder = null;
+        if (orderrepo.findById(id).isPresent()) {
+            savedOrder = orderrepo.getById(id);
+            savedOrder.setOrderStatus(status);
+            orderrepo.save(savedOrder);
+            return ResponseEntity.ok().body("Details updated successfully");
+        }
+        return ResponseEntity.unprocessableEntity().body("No details found");
+    }
+    public ResponseEntity<Object> getShippingInfo()
+    {
+        List<Shipping> savedshipping=shippingrepo.findAll();
+        if(savedshipping.isEmpty())
+            return ResponseEntity.badRequest().body("No records found");
+        return ResponseEntity.ok().body(savedshipping);
+    }
+
+
 
 }
