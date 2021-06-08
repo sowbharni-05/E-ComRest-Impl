@@ -2,7 +2,6 @@ package com.banfico.EcomApplication.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +21,8 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderId;
-    private String orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderstatus;
     private int quantity;
     private boolean payStatus;
     @JsonFormat(pattern = "yyyy/mm/dd")

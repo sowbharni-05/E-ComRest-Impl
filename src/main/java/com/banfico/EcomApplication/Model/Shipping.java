@@ -17,9 +17,10 @@ public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int shippingId;
-    private String shippingType;
+    @Enumerated(EnumType.ORDINAL)
+    private ShippingType shippingtype;
     private int ShippingCost;
-   // @JsonManagedReference(value="shippingRef")
+
     @OneToOne(cascade = CascadeType.ALL,targetEntity = OrderDetail.class,mappedBy = "shipping")
     private OrderDetail orderdetail;
 
