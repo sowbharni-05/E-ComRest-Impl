@@ -5,6 +5,7 @@ import com.banfico.EcomApplication.Dao.OrderRepo;
 import com.banfico.EcomApplication.Dao.ShippingRepo;
 import com.banfico.EcomApplication.Model.Customer;
 import com.banfico.EcomApplication.Model.OrderDetail;
+import com.banfico.EcomApplication.Model.OrderStatus;
 import com.banfico.EcomApplication.Model.Shipping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +41,12 @@ public class CustomerService {
             return ResponseEntity.unprocessableEntity().body("No details found");
     }
 
-    public ResponseEntity<String> updateCustomer(int id, String address) {
+    public ResponseEntity<String> updateCustomer(int id, String address, String phno) {
         savedCus = null;
         if (customerrepo.findById(id).isPresent()) {
             savedCus = customerrepo.getById(id);
             savedCus.setAddress(address);
+            savedCus.setPhNo(phno);
             customerrepo.save(savedCus);
             return ResponseEntity.ok().body("Details updated successfully");
         }
@@ -67,11 +69,11 @@ public class CustomerService {
         return ResponseEntity.unprocessableEntity().body("No details found");
     }
 
-    public ResponseEntity<String> updateStatus(int id, String status) {
+    public ResponseEntity<String> updateStatus(int id, OrderStatus status) {
         savedOrder = null;
         if (orderrepo.findById(id).isPresent()) {
             savedOrder = orderrepo.getById(id);
-            savedOrder.setOrderStatus(status);
+            savedOrder.setOrderstatus(status);
             orderrepo.save(savedOrder);
             return ResponseEntity.ok().body("Details updated successfully");
         }
@@ -84,7 +86,5 @@ public class CustomerService {
             return ResponseEntity.badRequest().body("No records found");
         return ResponseEntity.ok().body(savedshipping);
     }
-
-
 
 }
