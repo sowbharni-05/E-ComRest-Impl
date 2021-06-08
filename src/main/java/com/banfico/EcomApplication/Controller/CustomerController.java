@@ -1,10 +1,12 @@
 package com.banfico.EcomApplication.Controller;
 
 import com.banfico.EcomApplication.Model.OrderDetail;
+import com.banfico.EcomApplication.Model.OrderStatus;
 import com.banfico.EcomApplication.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -17,9 +19,10 @@ public class CustomerController{
 
         return customerservice.getCustomerInfo();
     }
-    @RequestMapping(path="/customer/{id}/{address}", method = RequestMethod.POST)
-    public ResponseEntity<String> updateCustomer(@PathVariable int id, @PathVariable String address){
-        return customerservice.updateCustomer(id,address);
+    @RequestMapping(path="/customer/{id}/{address}/{phno}", method = RequestMethod.POST)
+    public ResponseEntity<String> updateCustomer(@PathVariable int id, @PathVariable String address, @PathVariable String phno){
+            return customerservice.updateCustomer(id,address,phno);
+
     }
     @RequestMapping(path="/customer/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCustomer(@PathVariable int id){
@@ -31,7 +34,7 @@ public class CustomerController{
         return customerservice.addOrderInfo(order);
     }
     @RequestMapping(path="/order/{id}/{status}", method = RequestMethod.POST)
-    public ResponseEntity<String> updateStatus(@PathVariable int id, @PathVariable String status){
+    public ResponseEntity<String> updateStatus(@PathVariable int id, @PathVariable OrderStatus status){
         return customerservice.updateStatus(id,status);
     }
     @RequestMapping(path="/order/{id}",method = RequestMethod.DELETE)
