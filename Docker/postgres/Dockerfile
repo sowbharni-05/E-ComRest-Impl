@@ -1,0 +1,4 @@
+FROM postgres:10.2
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD password
+ENV POSTGRES_DB ecomdb

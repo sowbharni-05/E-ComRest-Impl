@@ -1,0 +1,20 @@
+version: '2'
+services:
+  ctomcat:
+    build:
+      context: .
+      dockerfile: ./Docker/tomcat/Dockerfile
+    ports:
+      - "8080:8080"
+      - "18000:18000"
+    image: ecom
+    depends_on:
+      - cpostgres
+
+  cpostgres:
+    build:
+      context: "./Docker/postgres"
+    restart: always
+    image: ipostgres-ecom
+    ports:
+      - 15432:5432
