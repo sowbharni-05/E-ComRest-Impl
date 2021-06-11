@@ -27,14 +27,24 @@ public class OrderDetail {
     private boolean payStatus;
     @JsonFormat(pattern = "yyyy/mm/dd")
     private Date orderDate;
+
+    @JsonBackReference(value="paymentRef")
+    @OneToOne(cascade = CascadeType.ALL,targetEntity = Payment.class)
+    @JoinColumn(name = "payment_id",referencedColumnName = "paymentId")
+    private Payment payment;
+
     @JsonBackReference(value = "shippingRef")
     @OneToOne(cascade = CascadeType.ALL,targetEntity = Shipping.class)
     @JoinColumn(name = "shipId",referencedColumnName = "shippingId")
     private Shipping shipping;
+
     @JsonBackReference(value="customerRef")
     @ManyToOne(cascade = CascadeType.ALL,targetEntity = Customer.class)
     @JoinColumn(name="CusId",referencedColumnName = "customerId")
     private Customer customer;
+
+
+
 
 
 }
