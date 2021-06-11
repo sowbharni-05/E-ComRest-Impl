@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 
 @RestController
@@ -19,8 +21,8 @@ public class CustomerController{
 
         return customerservice.getCustomerInfo();
     }
-    @RequestMapping(path="/customer/{id}/{address}/{phno}", method = RequestMethod.POST)
-    public ResponseEntity<String> updateCustomer(@PathVariable int id, @PathVariable String address, @PathVariable String phno){
+    @RequestMapping(path="/customer/{id}/{address}/{phno}", method = RequestMethod.PATCH)
+    public ResponseEntity<String> updateCustomer(@Valid @PathVariable int id, @PathVariable String address, @PathVariable String phno){
             return customerservice.updateCustomer(id,address,phno);
 
     }
@@ -29,22 +31,36 @@ public class CustomerController{
         return customerservice.deleteCustomerInfo(id);
     }
     @RequestMapping(path="/order",method = RequestMethod.POST)
-   public ResponseEntity<String> addOrder(@RequestBody OrderDetail order)
+   public ResponseEntity<String> addOrder(@Valid @RequestBody OrderDetail order)
     {
         return customerservice.addOrderInfo(order);
     }
-    @RequestMapping(path="/order/{id}/{status}", method = RequestMethod.POST)
-    public ResponseEntity<String> updateStatus(@PathVariable int id, @PathVariable OrderStatus status){
+    @RequestMapping(path="/order", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateStatus(@RequestParam(value = "id") int id, @RequestParam(value = "status") OrderStatus status){
         return customerservice.updateStatus(id,status);
     }
-    @RequestMapping(path="/order/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteOrder(@PathVariable int id){
+    @RequestMapping(path="/order",method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteOrder(@PathParam(value = "id") int id){
         return customerservice.deleteOrderInfo(id);
+    }
+    @RequestMapping(path="/order",method = RequestMethod.GET)
+    public ResponseEntity<Object> getOrderdetail(){
+        return customerservice.getOrderDetail();
     }
     @RequestMapping(path="/shipping",method = RequestMethod.GET)
     public ResponseEntity<Object> getShipping()
     {
         return customerservice.getShippingInfo();
+    }
+
+    @RequestMapping(path="/payment",method = RequestMethod.GET)
+    public ResponseEntity<Object> getPayment()
+    {
+        return customerservice.getPaymentInfo();
+    }
+    @RequestMapping(path = "/payment/{payType}",method=RequestMethod.GET)
+    public ResponseEntity<Object> getPaymentType(@PathVariable("payType") String pType){
+        return customerservice.getPaymentTypeInfo(pType);
     }
 
 
