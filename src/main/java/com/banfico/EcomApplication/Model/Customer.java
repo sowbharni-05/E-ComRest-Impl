@@ -29,13 +29,9 @@ public class Customer {
     private String pinCode;
     @Size(min = 0,max = 10,message = "Invalid PhoneNumber")
     private String phNo;
+
     @JsonManagedReference("customerRef")
     @OneToMany(targetEntity = OrderDetail.class,mappedBy = "customer",cascade = CascadeType.ALL)
     private List<OrderDetail> orders;
-
-    public void customerOrders(OrderDetail orderdetail) {
-
-        orders.add(orderdetail);
-    }
 
 }
