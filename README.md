@@ -3,8 +3,14 @@ Implementation of REST api's in E-Commerce service.
 
 Ecom Rest Implementation consists of various entities, controllers, services, repositories, exception handlers, resource files, and docker setup files.
 
-# Required Softwares
-Java 
+# Technologies
+Java 1.8
+
+Maven
+
+SpringBoot
+
+JPA
 
 Docker
 
