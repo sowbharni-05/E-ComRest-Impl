@@ -3,17 +3,17 @@ services:
   ctomcat:
     build:
       context: .
-      dockerfile: ./Docker/tomcat/Dockerfile
+      dockerfile: ./docker/tomcat/Dockerfile
     ports:
       - "8080:8080"
       - "18000:18000"
-    image: ecom
+    image: itomcat-ecom
     depends_on:
       - cpostgres
 
   cpostgres:
     build:
-      context: "./Docker/postgres"
+      context: "./docker/postgres"
     restart: always
     image: ipostgres-ecom
     ports:
