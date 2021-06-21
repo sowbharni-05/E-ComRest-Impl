@@ -1,4 +1,4 @@
-package com.banfico.EcomApplication.Model;
+package com.banfico.EcomApplication.entity.enumtype;
 
 public enum OrderStatus {
     Confirmed,NotConfirmed;
