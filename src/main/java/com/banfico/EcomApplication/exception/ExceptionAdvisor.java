@@ -1,4 +1,4 @@
-package com.banfico.EcomApplication.Exception;
+package com.banfico.EcomApplication.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
