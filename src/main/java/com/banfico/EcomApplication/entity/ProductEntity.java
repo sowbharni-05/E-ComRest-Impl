@@ -1,11 +1,12 @@
 package com.banfico.EcomApplication.entity;
 
-import com.banfico.EcomApplication.model.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -14,11 +15,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "product")
-public class ProductEntity extends Product {
+public class ProductEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int productId;
     private String productName;
     private double price;
+
+   // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonBackReference
     @ManyToOne(targetEntity = CategoryEntity.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId",referencedColumnName ="categoryId")

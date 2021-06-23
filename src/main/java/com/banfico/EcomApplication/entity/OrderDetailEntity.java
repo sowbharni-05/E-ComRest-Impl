@@ -1,23 +1,33 @@
 package com.banfico.EcomApplication.entity;
 
-import com.banfico.EcomApplication.model.OrderDetail;
+import com.banfico.EcomApplication.entity.enumtype.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Accessors(chain = true)
 @Entity
 @Table(name="orderdetail")
-public class OrderDetailEntity extends OrderDetail {
+public class OrderDetailEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int orderId;
+    private OrderStatus orderstatus;
+    private int quantity;
+    private boolean payStatus;
+    private Date orderDate;
 
     @JsonBackReference(value="paymentRef")
     @OneToOne(cascade = CascadeType.ALL,targetEntity = PaymentEntity.class)
