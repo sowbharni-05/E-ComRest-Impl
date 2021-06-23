@@ -7,11 +7,18 @@ import com.banfico.EcomApplication.dao.CustomerRepo;
 import com.banfico.EcomApplication.dao.OrderRepo;
 import com.banfico.EcomApplication.dao.PaymentRepo;
 import com.banfico.EcomApplication.dao.ShippingRepo;
+import com.banfico.EcomApplication.mapper.*;
+import com.banfico.EcomApplication.model.Customer;
+import com.banfico.EcomApplication.model.OrderDetail;
+import com.banfico.EcomApplication.model.Payment;
+import com.banfico.EcomApplication.model.Shipping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,17 +34,21 @@ public class CustomerServiceImpl implements CustomerService {
     private OrderDetailEntity savedOrder;
 
     @Override
-    public ResponseEntity<List<CustomerEntity>> getCustomerInfo() {
-        List<CustomerEntity> savedCus=customerrepo.findAll();
-        return ResponseEntity.ok().body(savedCus);
+    public ResponseEntity<List<Customer>> getCustomerInfo() {
+        List<CustomerEntity> savedCustomerEntity =customerrepo.findAll();
+        List<Customer> customers= new ArrayList<>();
+        for (CustomerEntity customerEntity : savedCustomerEntity) {
+           customers= Arrays.asList(CustomerMapper.EntityToDto(customerEntity));
+        }
+        return ResponseEntity.ok().body(customers);
 
     }
     @Override
-    public ResponseEntity<HttpStatus> addCustomerInfo(CustomerEntity customerEntity) {
-        savedCus=null;
+    public ResponseEntity<HttpStatus> addCustomerInfo(Customer customer) {
         try {
-            savedCus = customerrepo.save(customerEntity);
-            if (customerrepo.findById(savedCus.getCustomerId()).isPresent())
+            CustomerEntity customerEntity = CustomerMapper.DtoToEntity(customer);
+            CustomerEntity savedCustomerEntity = customerrepo.save(customerEntity);
+            if (customerrepo.findById(savedCustomerEntity.getCustomerId()).isPresent())
                 return new ResponseEntity<>(HttpStatus.CREATED);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -73,13 +84,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
     @Override
-    public ResponseEntity<HttpStatus> addOrderInfo(OrderDetailEntity ord) {
-        savedOrder=null;
+    public ResponseEntity<HttpStatus> addOrderInfo(OrderDetail ord) {
+        OrderDetailEntity orderDetailEntity = OrderDetailMapper.DtoToEntity(ord);
         try {
-           savedOrder = orderrepo.save(ord);
-           if (orderrepo.findById(savedOrder.getOrderId()).isPresent())
-               return new ResponseEntity<>(HttpStatus.CREATED);
-           return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            OrderDetailEntity savedOrderEntity = orderrepo.save(orderDetailEntity);
+            if (orderrepo.findById(savedOrderEntity.getOrderId()).isPresent())
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
        }
        catch (Exception e)
        {
@@ -106,28 +117,45 @@ public class CustomerServiceImpl implements CustomerService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @Override
-    public ResponseEntity<List<OrderDetailEntity>> getOrderDetail()
+    public ResponseEntity<List<OrderDetail>> getOrderDetail()
     {
-        List<OrderDetailEntity> orderdetail =orderrepo.findByOrderByOrderDateAsc();
-        return ResponseEntity.ok().body(orderdetail);
+        List<OrderDetailEntity> savedOrderEntity =orderrepo.findByOrderByOrderDateAsc();
+        List<OrderDetail> orderDetails= new ArrayList<>();
+        for (OrderDetailEntity orderDetailEntity : savedOrderEntity) {
+            orderDetails=Arrays.asList(OrderDetailMapper.EntityToDto(orderDetailEntity));
+        }
+
+        return ResponseEntity.ok().body(orderDetails);
     }
     @Override
-    public ResponseEntity<List<ShippingEntity>> getShippingInfo()
+    public ResponseEntity<List<Shipping>> getShippingInfo()
     {
-        List<ShippingEntity> savedshipping=shippingrepo.findAll();
-        return ResponseEntity.ok().body(savedshipping);
+        List<ShippingEntity> savedShippingEntity=shippingrepo.findAll();
+        List<Shipping> shippingList= new ArrayList<>();
+        for (ShippingEntity shippingEntity:savedShippingEntity) {
+            shippingList=Arrays.asList(ShippingMapper.EntityToDto(shippingEntity));
+        }
+        return ResponseEntity.ok().body(shippingList);
     }
     @Override
-    public ResponseEntity<List<PaymentEntity>> getPaymentInfo()
+    public ResponseEntity<List<Payment>> getPaymentInfo()
     {
-        List<PaymentEntity> savedpayment =paymentrepo.findAll();
-        return ResponseEntity.ok().body(savedpayment);
+        List<PaymentEntity> savedPaymentEntity =paymentrepo.findAll();
+        List<Payment> payments = new ArrayList<>();
+        for (PaymentEntity paymentEntity:savedPaymentEntity) {
+            payments=Arrays.asList(PaymentMapper.EntityToDto(paymentEntity));
+        }
+        return ResponseEntity.ok().body(payments);
     }
     @Override
-    public ResponseEntity<List<PaymentEntity>> getPaymentTypeInfo(String pType)
+    public ResponseEntity<List<Payment>> getPaymentTypeInfo(String pType)
     {
-        List<PaymentEntity> savedpayment =paymentrepo.getBypayTypeMatch(pType);
-        return ResponseEntity.ok().body(savedpayment);
+        List<PaymentEntity> savedPaymentEntity =paymentrepo.getBypayTypeMatch(pType);
+        List<Payment> payments = new ArrayList<>();
+        for (PaymentEntity paymentEntity:savedPaymentEntity) {
+            payments=Arrays.asList(PaymentMapper.EntityToDto(paymentEntity));
+        }
+        return ResponseEntity.ok().body(payments);
     }
 
 
