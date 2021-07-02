@@ -2,6 +2,7 @@ package com.banfico.EcomApplication.controller;
 import com.banfico.EcomApplication.model.Category;
 import com.banfico.EcomApplication.model.Product;
 import com.banfico.EcomApplication.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(tags = "Products",description = "Add, View, Update, Delete of Products and Categories")
 @RestController
 @RequestMapping("/categories")
 public class ProductController {

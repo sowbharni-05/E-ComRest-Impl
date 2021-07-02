@@ -11,14 +11,13 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
-
+@Api(tags = "Customers",description = "Add, View, Update,Delete of Customer, Orders, Payment, and Shipping ")
 @RestController
 @RequestMapping("/customers")
 public class CustomerController{
@@ -40,8 +39,8 @@ public class CustomerController{
 
     @ApiOperation(nickname = "UpdateCustomerInfo",value = "UpdateCustomerDetails",notes = "Provide an id to update address,phone number of a specific Customer")
     @RequestMapping(path="/", method = RequestMethod.PATCH)
-    public ResponseEntity<CustomerEntity> updateCustomer(@Valid @RequestParam int id, @RequestParam String address, @RequestParam String phno){
-        return customerservice.updateCustomer(id,address,phno);
+    public ResponseEntity<CustomerEntity> updateCustomer(@Valid @RequestParam int id, @RequestParam String phno,@RequestBody Address address) {
+        return customerservice.updateCustomer(id, phno, address);
 
     }
 
