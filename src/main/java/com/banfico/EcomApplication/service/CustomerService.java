@@ -15,7 +15,7 @@ public interface CustomerService {
     ResponseEntity<List<Customer>> getCustomerInfo();
     ResponseEntity<HttpStatus> addCustomerInfo(Customer customer);
     ResponseEntity<HttpStatus> deleteCustomerInfo(int id);
-    ResponseEntity<CustomerEntity> updateCustomer(int id, String address, String phno);
+    ResponseEntity<CustomerEntity> updateCustomer(int id, String phno,Address address);
     ResponseEntity<HttpStatus> addOrderInfo(OrderDetail ord);
     ResponseEntity<HttpStatus> deleteOrderInfo(int id);
     ResponseEntity<OrderDetailEntity> updateStatus(int id, OrderStatus status);
