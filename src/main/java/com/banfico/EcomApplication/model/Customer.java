@@ -1,5 +1,5 @@
 package com.banfico.EcomApplication.model;
-
+import com.banfico.EcomApplication.entity.Address;
 import com.banfico.EcomApplication.entity.OrderDetailEntity;
 import com.banfico.EcomApplication.validation.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
@@ -27,14 +26,15 @@ public class Customer {
     @ApiModelProperty(name="CustomerEmailId",example = "customername@gmail.com",position = 3,dataType = "String")
     @Email(message="Invalid EmailId")
     private String emailId;
-    @ApiModelProperty(name="Address",position = 4,dataType = "String")
+   /* @ApiModelProperty(name="Address",position = 4,dataType = "String")
     @NotBlank(message = "Address should not be empty")
-    private String address;
+    private String address;*/
     @ApiModelProperty(name = "PhoneNumber",dataType = "String",position =4,hidden = true)
     //@Size(min = 0,max = 10,message = "Invalid PhoneNumber")
     @PhoneNumber(message = "PhoneNumber must be  valid" )
     private String phNo;
-    @ApiModelProperty(name="Pincode")
-    private String pinCode;
+   /* @ApiModelProperty(name="Pincode")
+    private String pinCode;*/
+    private List<Address> addresses;
     private List<OrderDetailEntity> orderDetails;
 }
