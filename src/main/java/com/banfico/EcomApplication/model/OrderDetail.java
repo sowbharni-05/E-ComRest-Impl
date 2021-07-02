@@ -32,7 +32,7 @@ public class OrderDetail {
     private int quantity;
     private boolean payStatus;
     @ApiModelProperty(name="OrderDate",notes = "OrderedDate")
-    @JsonFormat(pattern = "yyyy/mm/dd")
+    @JsonFormat(pattern = "yyyy/mm/dd",shape = JsonFormat.Shape.STRING)
     private Date orderDate;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private PaymentEntity paymentDetails;
